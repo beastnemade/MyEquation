@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Loader2 } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 export default function ContactRegister() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ export default function ContactRegister() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const { elementRef, isVisible } = useScrollAnimation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,82 +45,67 @@ export default function ContactRegister() {
   };
 
   return (
-    <section id="register" className="relative py-24 bg-neo-charcoal">
+    <section 
+      ref={elementRef}
+      id="register" 
+      className={`relative py-24 bg-neo-charcoal fade-in-up ${isVisible ? 'visible' : ''}`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 px-4">
             Ready to Start Your Journey?
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto px-4">
             Fill out the form below and our admissions team will get in touch with you
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           <div>
-            <div className="glass-card p-8 mb-6">
+            <div className="glass-card p-8 pl-16 mb-6 h-full">
               <h3 className="text-2xl font-bold text-white mb-6">Get in Touch</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-neo-orange/10 border border-neo-orange/20 flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 flex items-center justify-center flex-shrink-0 pr-2 -mt-2">
                     <Mail className="w-6 h-6 text-neo-orange" />
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Email</h4>
-                    <p className="text-gray-400">admissions@coursehub.com</p>
+                    <p className="text-gray-400">info@myequation.in</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-neo-blue/10 border border-neo-blue/20 flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 flex items-center justify-center flex-shrink-0 pr-2 -mt-2">
                     <Phone className="w-6 h-6 text-neo-blue" />
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Phone</h4>
-                    <p className="text-gray-400">+1 (555) 123-4567</p>
+                    <p className="text-gray-400">Gunesh  - 88068 06479</p>
+                    <p className="text-gray-400">Kaustuv - 93378 37362</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-neo-yellow/10 border border-neo-yellow/20 flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 flex items-center justify-center flex-shrink-0 pr-2 -mt-2">
                     <MapPin className="w-6 h-6 text-neo-yellow" />
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Location</h4>
-                    <p className="text-gray-400">San Francisco, CA 94102</p>
+                    <p className="text-gray-400">Atal-Kalam Building,</p>
+                    <p className="text-gray-400">Opp. GUSEC, Ahmedabad,</p>
+                    <p className="text-gray-400">Gujarat 380009</p>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div className="glass-card p-8">
-              <h3 className="text-xl font-bold text-white mb-4">Program Details</h3>
-              <ul className="space-y-3 text-gray-400">
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-neo-orange" />
-                  Duration: 12 weeks full-time
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-neo-blue" />
-                  Format: Live online sessions + self-paced
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-neo-yellow" />
-                  Next cohort: Starting March 2025
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-neo-orange" />
-                  Investment: $12,999 (financing available)
-                </li>
-              </ul>
-            </div>
           </div>
 
-          <div id="contact" className="glass-card p-8">
+          <div id="contact" className="glass-card p-8 h-full">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-white font-semibold mb-2">
-                  Full Name *
+                  Full Name
                 </label>
                 <input
                   type="text"
@@ -128,13 +115,12 @@ export default function ContactRegister() {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-neo-orange focus:ring-2 focus:ring-neo-orange/20 transition-all duration-300"
-                  placeholder="John Doe"
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-white font-semibold mb-2">
-                  Email Address *
+                  Email Address
                 </label>
                 <input
                   type="email"
@@ -144,13 +130,12 @@ export default function ContactRegister() {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-neo-orange focus:ring-2 focus:ring-neo-orange/20 transition-all duration-300"
-                  placeholder="john@example.com"
                 />
               </div>
 
               <div>
                 <label htmlFor="phone" className="block text-white font-semibold mb-2">
-                  Phone Number *
+                  Phone Number
                 </label>
                 <input
                   type="tel"
@@ -160,50 +145,13 @@ export default function ContactRegister() {
                   value={formData.phone}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-neo-orange focus:ring-2 focus:ring-neo-orange/20 transition-all duration-300"
-                  placeholder="+1 (555) 123-4567"
                 />
               </div>
-
-              <div>
-                <label htmlFor="experience" className="block text-white font-semibold mb-2">
-                  Coding Experience *
-                </label>
-                <select
-                  id="experience"
-                  name="experience"
-                  required
-                  value={formData.experience}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-neo-orange focus:ring-2 focus:ring-neo-orange/20 transition-all duration-300"
-                >
-                  <option value="beginner">Complete Beginner</option>
-                  <option value="some">Some Experience</option>
-                  <option value="intermediate">Intermediate</option>
-                  <option value="advanced">Advanced</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-white font-semibold mb-2">
-                  Tell us about your goals
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-neo-orange focus:ring-2 focus:ring-neo-orange/20 transition-all duration-300 resize-none"
-                  placeholder="What are you hoping to achieve with this program?"
-                />
-              </div>
-
               <button
                 type="submit"
                 disabled={isSubmitting || submitSuccess}
-                className={`w-full btn-primary flex items-center justify-center gap-2 ${
-                  isSubmitting || submitSuccess ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
+                className={`w-full btn-primary flex items-center justify-center gap-2 ${isSubmitting || submitSuccess ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
               >
                 {isSubmitting ? (
                   <>

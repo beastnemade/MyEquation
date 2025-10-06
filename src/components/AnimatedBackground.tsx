@@ -76,7 +76,7 @@ export default function AnimatedBackground() {
           const y =
             point.y +
             Math.sin(point.x * line.frequency + time * line.speed + line.offset) *
-              line.amplitude;
+            line.amplitude;
 
           if (i === 0) {
             ctx.moveTo(point.x, y);
@@ -102,7 +102,7 @@ export default function AnimatedBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full opacity-60"
+      className="fixed inset-0 opacity-60 overflow-hidden"
       aria-hidden="true"
     />
   );
